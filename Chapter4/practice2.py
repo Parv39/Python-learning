@@ -1,0 +1,16 @@
+# a1 = [20,50,10,97,85,99]
+# a1.sort()
+# print(a1)
+a = []
+a1 = int(input("Enter 1 Marks:"))
+a2 = int(input("Enter 2 Marks:"))
+a3 = int(input("Enter 3 Marks:"))
+a4 = int(input("Enter 4 Marks:"))
+a5 = int(input("Enter 5 Marks:"))
+a.append(a1)
+a.append(a2)
+a.append(a3)
+a.append(a4)
+a.append(a5)
+a.sort()
+print(a)
