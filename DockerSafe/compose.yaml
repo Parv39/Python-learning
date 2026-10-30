@@ -1,0 +1,40 @@
+# ==============================================================================
+# DockerSafe — Optional Standalone Persistence Demonstration
+# ==============================================================================
+# This Docker Compose file provides an independent, illustrative reference for
+# students and teachers to demonstrate Docker named volume persistence with PostgreSQL.
+#
+# NOTE: The main DockerSafe application dynamically orchestrates isolated test
+# containers and volumes via the Docker SDK directly in the web dashboard.
+# This Compose file is an optional standalone companion reference.
+#
+# Usage:
+#   docker compose up -d
+#   docker compose down
+#   docker compose down -v  (WARNING: deletes the volume and its persisted data)
+# ==============================================================================
+
+services:
+  demo_database:
+    image: postgres:16-alpine
+    container_name: dockersafe-compose-demo-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: demo_user
+      POSTGRES_PASSWORD: demo_password_change_me
+      POSTGRES_DB: demo_db
+    ports:
+      - "127.0.0.1:5433:5432" # Bound strictly to localhost on non-standard port 5433
+    volumes:
+      - demo_pg_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U demo_user -d demo_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  demo_pg_volume:
+    name: dockersafe-compose-standalone-volume
+    labels:
+      dockersafe.managed: "false" # Distinct from dynamic lab runs
